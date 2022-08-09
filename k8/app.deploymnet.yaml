@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8-intro
+  namespace: rvr-ns
+spec:
+  replicas: 2
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      name: k8-intro
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        release: a1.1
+        instance: app
+        name: k8-intro
+    spec:
+      hostname: k8-intro
+      imagePullSecrets:
+      - name: maerskao
+      containers:
+      - name: k8-intro
+        image: rvrteach/rvrteach-rep:k8-intro
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+          name: http
+
+

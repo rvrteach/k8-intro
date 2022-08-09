@@ -1,0 +1,44 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: k8-intro
+  namespace: rvr-ns
+  labels:
+    website: k8-intro
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+
+spec:
+  rules:
+    - host: rvrhost
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: k8-intro
+              port: 
+                number: 8080
+        - path: /swagger-ui/
+          pathType: Prefix
+          backend:
+            service:
+              name: k8-intro
+              port: 
+                number: 8080
+        - path: /v3/api-docs/
+          pathType: Prefix
+          backend:
+            service:
+              name: k8-intro
+              port: 
+                number: 8080
+        - path: /actuator/health
+          pathType: Prefix
+          backend:
+            service:
+              name: k8-intro
+              port: 
+                number: 8080
